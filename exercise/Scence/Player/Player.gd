@@ -18,8 +18,54 @@ var velocity:Vector2
 var direction = "right"
 var is_dashing = false
 var is_attacking = false
-var state
-enum states{IDLE,WALK,FALL,JUMP,ATTACK,DASH}
+var state:int 
+enum states{IDLE,WALK,FALL,JUMP,ATTACK,DASH} #enum括号里是int型变量
+
+func _ready()->void:
+	state = states.IDLE
+	get_node("HitboxPosition/Hitbox/CollisionShape2D").disabled = true
+	
+	
+func update_direction(inputdirection_x)->void:
+	if inputdirection_x >0:
+		direction = "right"
+		$Sprite.flip_h = false
+		get_node("HitboxPosition").rotation_degrees = 0
+		
+	elif inputdirection_x <0:
+		direction = "left"
+		get_node("Sprite").flip_h = true
+		get_node("HitboxPosition").rotation_degrees = 180
+		
+func apply_gravity(delta)->void:
+	velocity.y += gravity * delta
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

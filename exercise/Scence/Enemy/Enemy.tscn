@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scence/Enemy/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://assets/Enemies/enemy_sprite_sheet.png" type="Texture" id=2]
+[ext_resource path="res://assets/Enemies/enemy_idle.png" type="Texture" id=3]
 
 [sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 2 )
@@ -26,6 +27,14 @@ region = Rect2( 0, 192, 42, 16 )
 [sub_resource type="AtlasTexture" id=18]
 atlas = ExtResource( 2 )
 region = Rect2( 0, 208, 42, 16 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 16, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 2 )
@@ -66,6 +75,11 @@ animations = [ {
 "name": "Death",
 "speed": 8.0
 }, {
+"frames": [ SubResource( 19 ), SubResource( 20 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 3.0
+}, {
 "frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": true,
 "name": "Walk",
@@ -85,7 +99,7 @@ script = ExtResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -8 )
 frames = SubResource( 1 )
-animation = "Walk"
+animation = "Idle"
 frame = 1
 playing = true
 

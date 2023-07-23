@@ -2,3 +2,5 @@
 exercise/.import/
 exercise/assets/Music/
 *.png~
+*.kra
+exercise/Game.tscn

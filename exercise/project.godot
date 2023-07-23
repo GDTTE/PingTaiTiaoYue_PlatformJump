@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "KinematicBody2D",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://Scence/Enemy/Enemy.gd"
+}, {
+"base": "KinematicBody2D",
 "class": "Player",
 "language": "GDScript",
 "path": "res://Scence/Player/Player.gd"
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://Scence/Player/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"Enemy": "",
 "Player": "",
 "StateMachine": ""
 }
@@ -42,6 +48,10 @@ window/stretch/aspect="keep"
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+
+[layer_names]
+
+2d_physics/layer_2="Enemy"
 
 [mono]
 

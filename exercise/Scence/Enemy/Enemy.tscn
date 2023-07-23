@@ -1,0 +1,84 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Scence/Enemy/Enemy.gd" type="Script" id=1]
+[ext_resource path="res://assets/Enemies/enemy_sprite_sheet.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 42, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 16, 42, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 32, 42, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 48, 42, 16 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 64, 42, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 80, 42, 16 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 96, 42, 16 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 112, 42, 16 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 128, 42, 16 )
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "Death",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"loop": true,
+"name": "Walk",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 8.06226
+
+[sub_resource type="CircleShape2D" id=12]
+radius = 8.0
+
+[node name="Enemy" type="KinematicBody2D"]
+collision_layer = 2
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -8 )
+frames = SubResource( 1 )
+animation = "Walk"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -8 )
+shape = SubResource( 11 )
+
+[node name="MoveTimer" type="Timer" parent="."]
+
+[node name="HurtBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2( 0, -8 )
+shape = SubResource( 12 )
+
+[connection signal="timeout" from="MoveTimer" to="." method="_on_MoveTimer_timeout"]
+[connection signal="area_entered" from="HurtBox" to="." method="_on_HurtBox_area_entered"]

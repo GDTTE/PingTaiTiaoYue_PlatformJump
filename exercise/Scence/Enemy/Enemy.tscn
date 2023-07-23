@@ -53,7 +53,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=11]
-radius = 8.06226
+radius = 7.5
 
 [sub_resource type="CircleShape2D" id=12]
 radius = 8.0
@@ -66,6 +66,7 @@ script = ExtResource( 1 )
 position = Vector2( 0, -8 )
 frames = SubResource( 1 )
 animation = "Walk"
+frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

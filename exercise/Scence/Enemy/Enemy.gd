@@ -31,7 +31,7 @@ func _ready() -> void:
 	
 func get_random_direction() -> int:
 	var random_number = rand_gen.randi_range(0, 1)
-	return [0, 1][random_number]
+	return [-1, 1][random_number]
 
 
 func set_direction_right() -> void:

@@ -1,0 +1,4 @@
+#ignore when git add and commit
+exercise/.import/
+exercise/assets/Music/
+*.png~

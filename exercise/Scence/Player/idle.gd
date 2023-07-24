@@ -1,10 +1,10 @@
 extends StateCommonCode
 
-onready var player:Node = get_node("/root/Player")
 
 
 func enter()->void:
-	state_machine.transition_to("idle")
+	player.animation_state.travel("idle")
+	
 	
 func exit()->void:
 	pass

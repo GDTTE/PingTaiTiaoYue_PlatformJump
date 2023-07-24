@@ -1,13 +1,13 @@
-extends State
+extends Node
 
 class_name StateCommonCode
 
-var player : Player
+var state_machine = null
 
-func _ready()->void:
-	yield(owner,"ready")
+var player:Player
+
+func _ready():
 	
 	player = owner as Player
 	
-	assert(player!= null)
-	
+	assert(player!=null)

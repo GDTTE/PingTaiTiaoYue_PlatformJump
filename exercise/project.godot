@@ -20,26 +20,14 @@ _global_script_classes=[ {
 "path": "res://Scence/Player/Player.gd"
 }, {
 "base": "Node",
-"class": "StateCommonCode",
-"language": "GDScript",
-"path": "res://Scence/Player/StateCommonCode.gd"
-}, {
-"base": "Node",
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://Scence/Player/StateMachine.gd"
-}, {
-"base": "Node",
-"class": "test",
-"language": "GDScript",
-"path": "res://test.gd"
 } ]
 _global_script_class_icons={
 "Enemy": "",
 "Player": "",
-"StateCommonCode": "",
-"StateMachine": "",
-"test": ""
+"StateMachine": ""
 }
 
 [application]

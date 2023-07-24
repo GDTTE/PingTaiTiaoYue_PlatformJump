@@ -1,8 +1,10 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://assets/Player/player_sprite_sheet.png" type="Texture" id=1]
 [ext_resource path="res://Scence/Player/Player.gd" type="Script" id=2]
-[ext_resource path="res://Scence/Player/StateMachine.gd" type="Script" id=3]
+[ext_resource path="res://Scence/StateMachine/StateMachine.gd" type="Script" id=3]
+[ext_resource path="res://Scence/Player/idle.gd" type="Script" id=4]
+[ext_resource path="res://Scence/Player/walk.gd" type="Script" id=5]
 
 [sub_resource type="CapsuleShape2D" id=10]
 radius = 4.0
@@ -245,10 +247,10 @@ states/jump/position = Vector2( 422, 804 )
 states/push/node = SubResource( 17 )
 states/push/position = Vector2( 710, 349 )
 states/walk/node = SubResource( 18 )
-states/walk/position = Vector2( 431, 204 )
+states/walk/position = Vector2( 432, 204 )
 transitions = [ "idle", "attack", SubResource( 19 ), "idle", "walk", SubResource( 20 ), "idle", "dash", SubResource( 21 ), "idle", "jump", SubResource( 22 ), "walk", "push", SubResource( 23 ), "walk", "fall", SubResource( 24 ), "dash", "death", SubResource( 25 ), "walk", "death", SubResource( 26 ), "idle", "death", SubResource( 27 ), "attack", "death", SubResource( 28 ), "jump", "death", SubResource( 29 ), "fall", "death", SubResource( 30 ), "push", "death", SubResource( 31 ), "walk", "dash", SubResource( 32 ), "jump", "dash", SubResource( 33 ), "jump", "fall", SubResource( 34 ), "push", "fall", SubResource( 35 ), "walk", "attack", SubResource( 36 ), "dash", "fall", SubResource( 37 ), "attack", "idle", SubResource( 38 ), "dash", "idle", SubResource( 41 ) ]
 start_node = "idle"
-graph_offset = Vector2( -31, 132.426 )
+graph_offset = Vector2( -175, 120.426 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=40]
 
@@ -257,7 +259,11 @@ radius = 3.0
 height = 10.0
 
 [node name="Player" type="KinematicBody2D"]
+position = Vector2( 157, -10 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -281,6 +287,7 @@ anims/walk = SubResource( 8 )
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 39 )
 anim_player = NodePath("../AnimationPlayer")
+active = true
 parameters/playback = SubResource( 40 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
@@ -298,19 +305,10 @@ shape = SubResource( 42 )
 
 [node name="StateMachine" type="Node" parent="."]
 script = ExtResource( 3 )
-
-[node name="attack" type="Node" parent="StateMachine"]
-
-[node name="dash" type="Node" parent="StateMachine"]
-
-[node name="death" type="Node" parent="StateMachine"]
-
-[node name="fall" type="Node" parent="StateMachine"]
+initial_state = NodePath("idle")
 
 [node name="idle" type="Node" parent="StateMachine"]
-
-[node name="jump" type="Node" parent="StateMachine"]
-
-[node name="push" type="Node" parent="StateMachine"]
+script = ExtResource( 4 )
 
 [node name="walk" type="Node" parent="StateMachine"]
+script = ExtResource( 5 )

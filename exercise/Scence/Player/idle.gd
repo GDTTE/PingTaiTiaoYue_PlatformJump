@@ -1,15 +1,35 @@
-extends StateMachine
+extends StateCommonCode
 
-onready var player:Node = get_node("/root/Player")
 
 
 func enter()->void:
-	state_machine.transition_to("idle")
+	player.animation_state.travel("idle")
+	
 	
 func exit()->void:
 	pass
 
-func physics_update()->void:
+
+func physics_update(delta:float)->void:
+	player.apply_gravity(delta)
+	player.velocity = player.move_and_slide_with_snap(player.velocity,
+													player.snap_vector,
+													Vector2.UP,
+													true,
+													player.floor_max_angle,
+													false)
+													
+													
+													
 	if !player.is_on_floor() && player.velocity.y >0:
 		state_machine.transition_to("fall")
-	var inputdirection_x:float = Input.get_action_strength("right")
+		return
+	
+	
+	if Input.is_action_pressed("right")||Input.is_action_pressed("left"):
+		state_machine.transition_to("walk")
+		return
+		
+		
+	
+	

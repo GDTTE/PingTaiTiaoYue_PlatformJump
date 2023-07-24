@@ -37,7 +37,7 @@ func update_direction(inputdirection_x)->void:
 		get_node("Sprite").flip_h = true
 		get_node("HitboxPosition").rotation_degrees = 180
 		
-func apply_gravity(delta)->void:
+func apply_gravity(delta: float)->void:
 	velocity.y += gravity * delta
 
 

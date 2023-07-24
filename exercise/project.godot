@@ -9,24 +9,41 @@
 config_version=4
 
 _global_script_classes=[ {
+<<<<<<< Updated upstream
 "base": "KinematicBody2D",
 "class": "Enemy",
 "language": "GDScript",
 "path": "res://Scence/Enemy/Enemy.gd"
 }, {
 "base": "KinematicBody2D",
+=======
+"base": "Node",
+>>>>>>> Stashed changes
 "class": "Player",
 "language": "GDScript",
 "path": "res://Scence/Player/Player.gd"
 }, {
 "base": "Node",
+<<<<<<< Updated upstream
+=======
+"class": "State",
+"language": "GDScript",
+"path": "res://Scence/StateMachine/State.gd"
+}, {
+"base": "Node",
+>>>>>>> Stashed changes
 "class": "StateMachine",
 "language": "GDScript",
 "path": "res://Scence/Player/StateMachine.gd"
 } ]
 _global_script_class_icons={
+<<<<<<< Updated upstream
 "Enemy": "",
 "Player": "",
+=======
+"Player": "",
+"State": "",
+>>>>>>> Stashed changes
 "StateMachine": ""
 }
 
@@ -49,6 +66,7 @@ window/stretch/aspect="keep"
 
 common/drop_mouse_on_gui_input_disabled=true
 
+<<<<<<< Updated upstream
 [importer_defaults]
 
 texture={
@@ -77,6 +95,31 @@ texture={
 
 2d_physics/layer_2="Enemy"
 
+=======
+[input]
+
+right={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777233,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+left={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777231,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+jump={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777232,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+attack={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+>>>>>>> Stashed changes
 [mono]
 
 project/assembly_name="exercise"

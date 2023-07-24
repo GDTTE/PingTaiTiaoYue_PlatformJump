@@ -1,4 +1,4 @@
-extends StateCommonCode
+extends StateMachine
 
 onready var player:Node = get_node("/root/Player")
 

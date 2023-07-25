@@ -4,6 +4,8 @@ extends StateCommonCode
 
 func enter()->void:
 	player.animation_state.travel("idle")
+	if player.is_on_floor():
+		player.num_dashes = 1
 	
 	
 func exit()->void:
@@ -38,6 +40,10 @@ func physics_update(delta:float)->void:
 		state_machine.transition_to("attack")
 		return
 	
+	if Input.is_action_just_pressed("dash"):
+		if player.num_dashes >0:
+			state_machine.transition_to("dash")
+			return
 	
 	
 	

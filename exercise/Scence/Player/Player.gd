@@ -44,7 +44,8 @@ func apply_gravity(delta: float)->void:
 func on_attack_finished()->void:
 	is_attacking = false
 
-
+func on_dash_finished()->void:
+	is_dashing = false
 
 
 

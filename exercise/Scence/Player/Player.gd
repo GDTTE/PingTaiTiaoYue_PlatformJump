@@ -18,11 +18,11 @@ var velocity:Vector2
 var direction = "right"
 var is_dashing = false
 var is_attacking = false
-var state:int 
-enum states{IDLE,WALK,FALL,JUMP,ATTACK,DASH} #enum括号里是int型变量
+#var state:int 
+#enum states{IDLE,WALK,FALL,JUMP,ATTACK,DASH} 
 
 func _ready()->void:
-	state = states.IDLE
+	#state = states.IDLE
 	get_node("HitboxPosition/Hitbox/CollisionShape2D").disabled = true
 	
 	
@@ -41,7 +41,8 @@ func apply_gravity(delta: float)->void:
 	velocity.y += gravity * delta
 
 
-
+func on_attack_finished()->void:
+	is_attacking = false
 
 
 

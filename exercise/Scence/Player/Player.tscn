@@ -327,6 +327,8 @@ height = 10.0
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 148, 90 )
+collision_layer = 4
+collision_mask = 11
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -334,6 +336,7 @@ texture = ExtResource( 1 )
 vframes = 35
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 1 )
 shape = SubResource( 10 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

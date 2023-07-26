@@ -8,6 +8,8 @@ onready var current_state:Node = get_node(initial_state_path)
 #this signal is not used in this game,so it  can be deleted
 signal transition_finished(state_name)
 
+
+
 func _ready()->void:
 	yield(owner,"ready")
 	for child in get_children():
@@ -15,8 +17,13 @@ func _ready()->void:
 				
 	current_state.enter()
 	
+	
+	
 func _physics_process(delta:float)->void:
 	current_state.physics_update(delta)
+	
+	
+	
 	
 func transition_to(target_state_name:String)->void:
 	if !has_node(target_state_name):

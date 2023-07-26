@@ -3,6 +3,7 @@ extends StateCommonCode
 
 
 func enter()->void:
+	player.velocity.x = 0
 	player.animation_state.travel("idle")
 	if player.is_on_floor():
 		player.num_dashes = 1
@@ -13,22 +14,26 @@ func exit()->void:
 
 
 func physics_update(delta:float)->void:
-	player.apply_gravity(delta)
-	player.velocity = player.move_and_slide_with_snap(player.velocity, 
-														player.snap_vector, 
-														Vector2.UP, 
-														true,
-														4,
-														player.floor_max_angle,
-														false)
-#	player.velocity = player.move_and_slide(player.velocity,
-#	Vector2.UP,true,4,player.floor_max_angle,true)
-													
-													
 													
 	if !player.is_on_floor() && player.velocity.y >0:
 		state_machine.transition_to("fall")
 		return
+	
+	
+	player.apply_gravity(delta)
+	
+#	player.velocity = player.move_and_slide(player.velocity, Vector2.UP)
+	
+	player.velocity = player.move_and_slide_with_snap(player.velocity, 
+													player.snap_vector, 
+													Vector2.UP, 
+													true,
+													4,
+													player.floor_max_angle,
+													false)
+	
+	
+	
 	
 	
 	if Input.is_action_pressed("right")||Input.is_action_pressed("left"):

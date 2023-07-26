@@ -9,4 +9,4 @@ physics_material_override = SubResource( 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 position = Vector2( 3, 0 )
-polygon = PoolVector2Array( 57, -2, 22, -2, 23, -14, 40, -10, 51, -17 )
+polygon = PoolVector2Array( 92, -2, 3, -2, 23, -14, 46, -8, 70, -15 )

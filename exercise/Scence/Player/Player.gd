@@ -9,11 +9,13 @@ export(int) var dash_speed = 300
 export(int) var num_dashes = 1
 var rigid_push:Vector2 = Vector2(255,0)#貌似是为了防止走在石头上面也推动它
  #handle slopes
-var snap_length:int = 2
+export(int) var snap_length:int
 var snap_direction:Vector2 = Vector2.DOWN
 var snap_vector:Vector2 = snap_length*snap_direction
 var floor_max_angle = deg2rad(65)
+
  # handle slopes
+
 var velocity:Vector2
 var direction = "right"
 var is_dashing = false

@@ -21,9 +21,11 @@ var is_attacking = false
 #var state:int 
 #enum states{IDLE,WALK,FALL,JUMP,ATTACK,DASH} 
 
+
 func _ready()->void:
 	#state = states.IDLE
 	get_node("HitboxPosition/Hitbox/CollisionShape2D").disabled = true
+
 	
 	
 func update_direction(inputdirection_x)->void:

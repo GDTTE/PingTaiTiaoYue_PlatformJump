@@ -86,7 +86,6 @@ script = ExtResource( 1 )
 position = Vector2( 0, -8 )
 frames = SubResource( 1 )
 animation = "Walk"
-frame = 3
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -96,6 +95,8 @@ shape = SubResource( 11 )
 [node name="MoveTimer" type="Timer" parent="."]
 
 [node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2( 0, -8 )

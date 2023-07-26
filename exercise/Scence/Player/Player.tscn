@@ -10,7 +10,7 @@
 [ext_resource path="res://Scence/Player/attack.gd" type="Script" id=8]
 [ext_resource path="res://Scence/Player/dash.gd" type="Script" id=9]
 
-[sub_resource type="CapsuleShape2D" id=10]
+[sub_resource type="CapsuleShape2D" id=49]
 radius = 4.0
 height = 6.0
 
@@ -337,7 +337,7 @@ vframes = 35
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1 )
-shape = SubResource( 10 )
+shape = SubResource( 49 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 1 )
@@ -358,11 +358,13 @@ parameters/playback = SubResource( 40 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 enabled = true
-cast_to = Vector2( 0, 11 )
+cast_to = Vector2( 0, 12 )
 
 [node name="HitboxPosition" type="Position2D" parent="."]
 
 [node name="Hitbox" type="Area2D" parent="HitboxPosition"]
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxPosition/Hitbox"]
 position = Vector2( 11, 2 )

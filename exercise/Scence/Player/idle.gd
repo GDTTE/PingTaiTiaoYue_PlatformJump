@@ -14,12 +14,15 @@ func exit()->void:
 
 func physics_update(delta:float)->void:
 	player.apply_gravity(delta)
-	player.velocity = player.move_and_slide_with_snap(player.velocity,
-													player.snap_vector,
-													Vector2.UP,
-													true,
-													player.floor_max_angle,
-													false)
+	player.velocity = player.move_and_slide_with_snap(player.velocity, 
+														player.snap_vector, 
+														Vector2.UP, 
+														true,
+														4,
+														player.floor_max_angle,
+														false)
+#	player.velocity = player.move_and_slide(player.velocity,
+#	Vector2.UP,true,4,player.floor_max_angle,true)
 													
 													
 													

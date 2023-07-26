@@ -19,6 +19,8 @@ func physics_update(delta:float)->void:
 													  4,
 													  player.floor_max_angle,
 													  false)
+#	player.velocity = player.move_and_slide(player.velocity,
+#	Vector2.UP,true,4,player.floor_max_angle,true)
 
 	var inputdirection_x:float =(
 		Input.get_action_strength("right")-Input.get_action_strength("left")

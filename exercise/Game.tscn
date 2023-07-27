@@ -5,7 +5,7 @@
 [ext_resource path="res://Scence/Enemy/Enemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scence/Player/Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scence/Objects/Switch/Switch.tscn" type="PackedScene" id=5]
-[ext_resource path="res://SlopeTest.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scence/Objects/StoneGate/StoneGate.tscn" type="PackedScene" id=6]
 
 [node name="Game" type="Node2D"]
 
@@ -23,5 +23,5 @@ position = Vector2( 221, 144 )
 [node name="Switch" parent="." instance=ExtResource( 5 )]
 position = Vector2( 107, 132 )
 
-[node name="SlopeTest" parent="." instance=ExtResource( 6 )]
-position = Vector2( 43, 146 )
+[node name="StoneGate" parent="Switch" instance=ExtResource( 6 )]
+position = Vector2( 55, -34 )

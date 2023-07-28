@@ -2,7 +2,7 @@ extends Node
 
 class_name StateMachine
 
-export var initial_state_path := NodePath() 
+export var initial_state_path:NodePath
 
 onready var current_state:Node = get_node(initial_state_path) 
 #this signal is not used in this game,so it  can be deleted

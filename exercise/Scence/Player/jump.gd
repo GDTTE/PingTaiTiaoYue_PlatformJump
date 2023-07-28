@@ -45,5 +45,13 @@ func physics_update(delta:float)->void:
 		if player.num_dashes>0:
 			state_machine.transition_to("dash")
 			return
-	
+			
+			
+			
+#	if player.get_slide_count()>0:
+#		for i in player.get_slide_count():
+#			var collision = player.get_slide_collision(i)
+#			var collider = collision.collider
+#			if collider is SpikePit:
+#				state_machine.transition_to("death")
 	

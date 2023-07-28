@@ -64,7 +64,7 @@ func _physics_process(delta: float) -> void:
 					var collision = get_slide_collision(i)
 					var collider = collision.collider
 					if collider is Player:
-						collider.get_node("StateMachine").transition_to("Death")
+						collider.get_node("StateMachine").transition_to("death")
 		
 		states.DEATH:
 			$AnimatedSprite.play("Death")

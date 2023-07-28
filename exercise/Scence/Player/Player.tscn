@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://assets/Player/player_sprite_sheet.png" type="Texture" id=1]
 [ext_resource path="res://Scence/Player/Player.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Scence/Player/fall.gd" type="Script" id=7]
 [ext_resource path="res://Scence/Player/attack.gd" type="Script" id=8]
 [ext_resource path="res://Scence/Player/dash.gd" type="Script" id=9]
+[ext_resource path="res://Scence/Player/death.gd" type="Script" id=10]
 
 [sub_resource type="CapsuleShape2D" id=49]
 radius = 4.0
@@ -335,7 +336,6 @@ snap_length = 2
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 vframes = 35
-frame = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1 )
@@ -394,3 +394,6 @@ script = ExtResource( 8 )
 
 [node name="dash" type="Node" parent="StateMachine"]
 script = ExtResource( 9 )
+
+[node name="death" type="Node" parent="StateMachine"]
+script = ExtResource( 10 )

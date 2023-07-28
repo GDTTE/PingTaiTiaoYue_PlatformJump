@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scence/Background/background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scence/TileMap/TileMap.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scence/Player/Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scence/Objects/Switch/Switch.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scence/Objects/StoneGate/StoneGate.tscn" type="PackedScene" id=6]
+[ext_resource path="res://SpikePit.tscn" type="PackedScene" id=7]
 
 [node name="Game" type="Node2D"]
 
@@ -24,4 +25,7 @@ position = Vector2( 221, 144 )
 position = Vector2( 107, 132 )
 
 [node name="StoneGate" parent="Switch" instance=ExtResource( 6 )]
-position = Vector2( 55, -34 )
+position = Vector2( 47, -36 )
+
+[node name="SpikePit" parent="." instance=ExtResource( 7 )]
+position = Vector2( 94, 73 )

@@ -52,7 +52,17 @@ func on_dash_finished()->void:
 	is_dashing = false
 
 
-
+func restart_level()->void:
+	#var current_level:String = get_parent().get_parent().name
+	#res://Scence/Levels/Level1.tscn
+	var current_level_name = get_parent().get_parent().name
+	var current_level_path_str :String="res://Scence/Levels/"+\
+													current_level_name+\
+														".tscn"
+	var current_level:PackedScene = load(current_level_path_str)
+	print(current_level_path_str)
+	
+	SceneManager.change_scene(current_level,"RestartFade")
 
 
 

@@ -1,0 +1,15 @@
+[gd_scene format=2]
+
+[node name="LevelTemplate" type="Node2D"]
+
+[node name="Backgrand" type="Node2D" parent="."]
+
+[node name="BGElements" type="Node2D" parent="."]
+
+[node name="Door" type="Node2D" parent="."]
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="Enermy" type="Node2D" parent="."]
+
+[node name="Player" type="Node2D" parent="."]

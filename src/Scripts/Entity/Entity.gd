@@ -23,5 +23,5 @@ func _physics_process(delta: float) -> void:
 
 
 func updata_flip(x = velocity.x) -> void:
-	if x > 0 : $AnimatedSprite.flip_h = false
-	elif x < 0 : $AnimatedSprite.flip_h = true
+	if x > 0 : get_node("Sprite").flip_h = false
+	elif x < 0 : get_node("Sprite").flip_h = true

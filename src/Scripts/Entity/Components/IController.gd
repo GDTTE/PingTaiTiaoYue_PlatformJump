@@ -5,9 +5,11 @@ var controlled: KinematicBody2D
 var actors := []
 var sensors := []
 
-func _init(body: KinematicBody2D).() -> void: controlled = body
+func _init(body: KinematicBody2D).() -> void: 
+	controlled = body
 	
-func set_body(body: KinematicBody2D) -> void: controlled = body
+func set_body(body: KinematicBody2D) -> void: 
+	controlled = body
 
 func add_component(comp: IComponent) -> void:
 	if comp is IActor: actors.append((comp as IActor))

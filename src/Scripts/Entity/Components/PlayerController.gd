@@ -19,7 +19,8 @@ var is_jumping = false
 var is_attacking = false
 var dash_nums = 1
 
-onready var animation_state = get_node("AnimationTree").get("parameters/playback")
+#onready var animation_state = get_node("/root/AnimationTree").get("parameters/playback")
+
 
 
 enum states{
@@ -37,17 +38,12 @@ var state = states.IDLE
 
 var input_direction := Vector2.ZERO
 
-var player:Player
 
-func _ready():
-	yield(owner,"ready")
-	player = owner as Player
-	
-	assert(player is Player)
-
+var player
 
 
 func _init(body).(body) -> void:
+	player = controlled
 	add_component(WalkActor.new())
 	
 #	add_component(AttackActor.new())
@@ -63,18 +59,18 @@ func apply_gravity(delta:float)->void:
 
 
 
-#func input(event: InputEvent) -> void:
-#	input_direction.x = Input.get_axis("left","right")
-#	if event.is_action_pressed("jump"):
-#		input_direction.y = 1
+func input(event: InputEvent) -> void:
+	input_direction.x = Input.get_axis("left","right")
+	if event.is_action_pressed("jump"):
+		input_direction.y = 1
 	
 
 func process(delta) -> void:
 	(actors[0] as IActor).set_expect_direction(input_direction)
 	match state:
-		state.IDLE:
+		states.IDLE:
 			apply_gravity(delta)
-			animation_state.travel("idle")
+			player.animation_state.travel("idle")
 			if  player.is_on_floor():
 				dash_nums = 1
 			
@@ -97,7 +93,7 @@ func process(delta) -> void:
 			
 			
 					
-		state.WALK:
+		states.WALK:
 			var inputdirection_x:float =(
 		Input.get_action_strength("right")-Input.get_action_strength("left")
 			)
@@ -106,7 +102,7 @@ func process(delta) -> void:
 			
 			player.updata_flip()
 			
-			current_velocity = player.move_and_slide_with_snap(current_velocity,
+			current_velocity =player.move_and_slide_with_snap(current_velocity,
 																Vector2.DOWN,
 																Vector2.UP,
 																true,

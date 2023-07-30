@@ -325,7 +325,7 @@ states/walk/node = SubResource( 18 )
 states/walk/position = Vector2( 432, 204 )
 transitions = [ "idle", "attack", SubResource( 19 ), "idle", "walk", SubResource( 20 ), "idle", "dash", SubResource( 21 ), "idle", "jump", SubResource( 22 ), "walk", "push", SubResource( 23 ), "walk", "fall", SubResource( 24 ), "dash", "death", SubResource( 25 ), "walk", "death", SubResource( 26 ), "idle", "death", SubResource( 27 ), "attack", "death", SubResource( 28 ), "jump", "death", SubResource( 29 ), "fall", "death", SubResource( 30 ), "push", "death", SubResource( 31 ), "walk", "dash", SubResource( 32 ), "jump", "dash", SubResource( 33 ), "jump", "fall", SubResource( 34 ), "push", "fall", SubResource( 35 ), "walk", "attack", SubResource( 36 ), "dash", "fall", SubResource( 37 ), "attack", "idle", SubResource( 38 ), "dash", "idle", SubResource( 41 ), "walk", "idle", SubResource( 43 ), "jump", "attack", SubResource( 44 ), "fall", "attack", SubResource( 45 ), "attack", "fall", SubResource( 46 ), "fall", "idle", SubResource( 47 ), "idle", "fall", SubResource( 48 ) ]
 start_node = "idle"
-graph_offset = Vector2( -13, 149.426 )
+graph_offset = Vector2( -214, 124.426 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=40]
 
@@ -345,6 +345,7 @@ script = ExtResource( 3 )
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 vframes = 35
+frame = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1 )

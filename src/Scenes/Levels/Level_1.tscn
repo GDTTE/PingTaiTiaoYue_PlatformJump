@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Objects/TileMap.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Objects/background.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Entity/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Entity/Enemy.tscn" type="PackedScene" id=4]
+
+[node name="Level_1" type="Node2D"]
+
+[node name="Background" parent="." instance=ExtResource( 2 )]
+margin_right = 320.0
+margin_bottom = 180.0
+
+[node name="TileMap" parent="." instance=ExtResource( 1 )]
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 40, 88 )
+
+[node name="Enemy" parent="." instance=ExtResource( 4 )]
+position = Vector2( 112, 144 )

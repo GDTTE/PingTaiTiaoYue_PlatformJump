@@ -1,0 +1,5 @@
+#ignore when git add and commit
+src/.import/
+src/Assets/Music/
+*.png~
+*.kra

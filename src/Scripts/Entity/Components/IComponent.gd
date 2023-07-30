@@ -1,3 +1,4 @@
+extends Node
 class_name IComponent
 
 var capability_tag := "[请设置能力描述]" setget set_capability_tag, get_capability_tag

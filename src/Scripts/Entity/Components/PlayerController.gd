@@ -1,40 +1,136 @@
 extends IController
 class_name PlayerController
 
+
+# temporary put in there
+var gravity: = 1000
+
+# basic parameters
+var walk_speed: float = 80
+var jump_speed:float = 300
+var dash_speed:float = 300
+
+var floor_max_angle = deg2rad(65)
+var current_velocity: Vector2 = Vector2.ZERO
+#var expect_velocity: Vector2 = Vector2.ZERO
+var expect_direction: Vector2 = Vector2.ZERO
+
+var is_jumping = false
+var is_attacking = false
+var dash_nums = 1
+
+onready var animation_state = get_node("AnimationTree").get("parameters/playback")
+
+
 enum states{
 	IDLE,
 	WALK,
-	RUN
+	RUN,
+	ATTACK,
+	JUMP,
+	FALL,
+	DASH,
+	DEATH
 }
 
 var state = states.IDLE
 
 var input_direction := Vector2.ZERO
 
+var player:Player
+
+func _ready():
+	yield(owner,"ready")
+	player = owner as Player
+	
+	assert(player is Player)
+
+
+
 func _init(body).(body) -> void:
 	add_component(WalkActor.new())
-	self.capability_tag = "能够被玩家操纵"
+	
+#	add_component(AttackActor.new())
+#	add_component(JumpActor.new())
+#	...
+	self.capability_tag = "能够被玩家操纵 走路，攻击，跳跃"
 
 
-func input(event: InputEvent) -> void:
-	input_direction.x = Input.get_axis("ui_left","ui_right")
-	if event.is_action_pressed("ui_up"):
-		input_direction.y = 1
+func apply_gravity(delta:float)->void:
+	current_velocity.y += delta * gravity
+
+
+
+
+
+#func input(event: InputEvent) -> void:
+#	input_direction.x = Input.get_axis("left","right")
+#	if event.is_action_pressed("jump"):
+#		input_direction.y = 1
 	
 
 func process(delta) -> void:
 	(actors[0] as IActor).set_expect_direction(input_direction)
 	match state:
 		state.IDLE:
-			if input_direction != Vector2.ZERO: state = states.WALK
-	
+			apply_gravity(delta)
+			animation_state.travel("idle")
+			if  player.is_on_floor():
+				dash_nums = 1
+			
+			if input_direction.x != 0:
+				state = states.WALK
+				return
+			if input_direction.y >0:
+				state = states.FALL
+				return
+			
+			if Input.is_action_just_pressed("jump"):
+				if !is_jumping:
+					state = states.JUMP
+					return
+					
+			if Input.is_action_just_pressed("attack"):
+				if !is_attacking:
+					state = states.ATTACK
+					return
+			
+			
+					
 		state.WALK:
-			if controlled.velocity > 1 : state = states.RUN
-			elif controlled.velocity < 0.1 : state = states.IDLE
+			var inputdirection_x:float =(
+		Input.get_action_strength("right")-Input.get_action_strength("left")
+			)
+			player.animation_state.travel("walk")
+			apply_gravity(delta)
+			
+			player.updata_flip()
+			
+			current_velocity = player.move_and_slide_with_snap(current_velocity,
+																Vector2.DOWN,
+																Vector2.UP,
+																true,
+																4,
+																floor_max_angle,
+																false)
+			
+			
+			if Input.is_action_just_pressed("jump"):
+				if !is_jumping:
+					state = states.JUMP
+					return
+			
+			
 		
-		state.RUN:
-			if controlled.velocity < 1 && controlled.velocity > 0.1: state = states.WALK
-			elif controlled.velocity < 0.1 : state = states.IDLE
+			
+			if is_equal_approx(current_velocity.x, 0.0):
+				state = states.IDLE
+				return
+			
+		
+		states.JUMP:
+			is_jumping = true
+			current_velocity.y = -jump_speed
 
 func physics_process(delta) -> Vector2:
 	return (actors[0] as IActor).act(delta)

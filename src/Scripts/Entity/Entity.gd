@@ -3,7 +3,7 @@ class_name Entity
 
 var velocity: Vector2 = Vector2.ZERO
 
-var controller = AIController.new(self)
+var controller:IController
 
 func _ready() -> void:
 	pass

@@ -18,13 +18,13 @@ func add_component(comp: IComponent) -> void:
 	if is_instance_valid(actors[0]): (actors[0] as IActor).set_body(controlled)
 
 # 响应输入事件
-func input(event: InputEvent) -> void: pass
+func input(event: InputEvent) -> void: 
+	pass
 
 # 帧事件
-func process(delta: float) -> void: pass
+func process(delta: float) -> void: 
+	pass
 
 # 物理帧事件
-func physics_process(delta) -> Vector2:
-	if is_instance_valid(actors[0]):
-		return (actors[0] as IActor).act(delta)
-	else: return Vector2.ZERO
+func physics_process(delta) -> void:
+	pass

@@ -1,132 +1,245 @@
-extends IController
+extends Node
 class_name PlayerController
 
 
-# temporary put in there
-var gravity: = 1000
-
-# basic parameters
-var walk_speed: float = 80
-var jump_speed:float = 300
-var dash_speed:float = 300
-
-var floor_max_angle = deg2rad(65)
-var current_velocity: Vector2 = Vector2.ZERO
-#var expect_velocity: Vector2 = Vector2.ZERO
-var expect_direction: Vector2 = Vector2.ZERO
-
-var is_jumping = false
-var is_attacking = false
-var dash_nums = 1
-
-#onready var animation_state = get_node("/root/AnimationTree").get("parameters/playback")
 
 
-
-enum states{
-	IDLE,
-	WALK,
-	RUN,
-	ATTACK,
-	JUMP,
-	FALL,
-	DASH,
-	DEATH
-}
-
-var state = states.IDLE
-
-var input_direction := Vector2.ZERO
+	
+	
+var inputdirection_x :float
 
 
 var player
 
-
-func _init(body).(body) -> void:
-	player = controlled
-	add_component(WalkActor.new())
+func _ready():
+	print("PlayerController Ready")
+	yield(owner,"ready")
+	player = owner as Player
+	assert(player != null)
 	
-#	add_component(AttackActor.new())
-#	add_component(JumpActor.new())
-#	...
-	self.capability_tag = "能够被玩家操纵 走路，攻击，跳跃"
-
-
-func apply_gravity(delta:float)->void:
-	current_velocity.y += delta * gravity
-
-
-
-
-
-func input(event: InputEvent) -> void:
-	input_direction.x = Input.get_axis("left","right")
-	if event.is_action_pressed("jump"):
-		input_direction.y = 1
+	
 	
 
-func process(delta) -> void:
-	(actors[0] as IActor).set_expect_direction(input_direction)
-	match state:
-		states.IDLE:
-			apply_gravity(delta)
+	
+
+func _process(delta) -> void:
+	pass
+	
+
+func _physics_process(delta) -> void:
+	
+	match player.state:
+		
+		player.states.IDLE:
+			print("idle")
+			player.current_velocity = Vector2.ZERO
+			player.is_jumping = false
 			player.animation_state.travel("idle")
-			if  player.is_on_floor():
-				dash_nums = 1
-			
-			if input_direction.x != 0:
-				state = states.WALK
-				return
-			if input_direction.y >0:
-				state = states.FALL
-				return
-			
-			if Input.is_action_just_pressed("jump"):
-				if !is_jumping:
-					state = states.JUMP
-					return
-					
-			if Input.is_action_just_pressed("attack"):
-				if !is_attacking:
-					state = states.ATTACK
-					return
-			
-			
-					
-		states.WALK:
-			var inputdirection_x:float =(
-		Input.get_action_strength("right")-Input.get_action_strength("left")
-			)
-			player.animation_state.travel("walk")
-			apply_gravity(delta)
-			
-			player.updata_flip()
-			
-			current_velocity =player.move_and_slide_with_snap(current_velocity,
+			player.apply_gravity(delta)
+			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
 																Vector2.DOWN,
 																Vector2.UP,
 																true,
 																4,
-																floor_max_angle,
+																player.floor_max_angle,
 																false)
+			inputdirection_x =(
+		Input.get_action_strength("right")-Input.get_action_strength("left")
+			)
+		
 			
+			if  player.is_on_floor():
+				player.dash_nums = 1
+			
+			if inputdirection_x!= 0:
+				player.state = player.states.WALK
+				
+			if player.current_velocity.y >0:
+				player.state = player.states.FALL
+				
 			
 			if Input.is_action_just_pressed("jump"):
-				if !is_jumping:
-					state = states.JUMP
-					return
+				if !player.is_jumping:
+					player.state = player.states.JUMP
+					
+					
+			if Input.is_action_just_pressed("attack"):
+				if !player.is_attacking:
+					player.state = player.states.ATTACK
+					
+			if Input.is_action_just_pressed("dash"):
+				if player.dash_nums >0 && !player.is_dashing:
+					player.state = player.states.DASH
+			
+					
+		player.states.WALK:
+			player.animation_state.travel("walk")
+			inputdirection_x =(
+		Input.get_action_strength("right")-Input.get_action_strength("left")
+			)
+			player.update_flip(inputdirection_x)
+			player.apply_gravity(delta)
+			
+			#player.updata_flip()
+			
+			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
+																Vector2.DOWN,
+																Vector2.UP,
+																true,
+																4,
+																player.floor_max_angle,
+																false)
+			player.current_velocity.x = player.walk_speed * inputdirection_x
+			
+			if Input.is_action_just_pressed("jump"):
+				if !player.is_jumping:
+					player.state = player.states.JUMP
+			
+			if Input.is_action_just_pressed("attack"):
+				if !player.is_attacking:
+					
+					player.state = player.states.ATTACK
+					
+			if Input.is_action_just_pressed("dash"):
+				if player.dash_nums >0:
+					
+					player.state = player.states.DASH
 			
 			
 		
 			
-			if is_equal_approx(current_velocity.x, 0.0):
-				state = states.IDLE
-				return
+			if is_equal_approx(player.current_velocity.x, 0.0):
+				player.state = player.states.IDLE
+				
 			
 		
-		states.JUMP:
-			is_jumping = true
-			current_velocity.y = -jump_speed
-
-func physics_process(delta) -> Vector2:
-	return (actors[0] as IActor).act(delta)
+		player.states.JUMP:
+			player.animation_state.travel("jump")
+			if !player.is_jumping:
+				player.current_velocity.y = -player.jump_speed
+			player.is_jumping = true
+			player.update_flip(inputdirection_x)
+			player.apply_gravity(delta)
+			
+			#player.updata_flip()
+			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
+																Vector2.DOWN,
+																Vector2.UP,
+																true,
+																4,
+																player.floor_max_angle,
+																false)
+			inputdirection_x =(
+		Input.get_action_strength("right")-Input.get_action_strength("left")
+			)
+			player.current_velocity.x = inputdirection_x * player.walk_speed
+			
+			
+			if player.current_velocity.y >0 :
+				player.state = player.states.FALL
+			
+			if Input.is_action_just_pressed("attack"):
+				if !player.is_attacking:
+					
+					player.state = player.states.ATTACK
+					
+	
+					
+			if Input.is_action_just_pressed("dash"):
+				if player.dash_nums >0:
+					
+					player.dash_nums -= 1
+					player.state = player.states.DASH
+		
+		
+		player.states.FALL:
+			player.animation_state.travel("fall")
+			player.apply_gravity(delta)
+			player.update_flip(inputdirection_x)
+			#player.updata_flip()
+			
+			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
+																Vector2.DOWN,
+																Vector2.UP,
+																true,
+																4,
+																player.floor_max_angle,
+																false)
+			inputdirection_x =(
+		Input.get_action_strength("right")-Input.get_action_strength("left")
+			)
+			player.current_velocity.x = inputdirection_x * player.walk_speed
+			
+			if player.is_on_floor():
+				player.state = player.states.IDLE
+		
+			if Input.is_action_just_pressed("attack"):
+				if !player.is_attacking :
+					
+					player.state = player.states.ATTACK
+		
+					
+			if Input.is_action_just_pressed("dash"):
+				if player.dash_nums >0:
+					
+					player.dash_nums -= 1
+					player.state = player.states.DASH
+		
+		
+		player.states.ATTACK:
+			print("attack")
+			player.is_attacking = true
+			player.animation_state.travel("attack")
+			player.current_velocity.y = 0
+			player.apply_gravity(delta)
+			yield(get_tree().create_timer(0.45),"timeout")
+			player.is_attacking = false
+			inputdirection_x =(
+		Input.get_action_strength("right")-Input.get_action_strength("left")
+			)
+			if !player.is_attacking:
+				if player.is_on_floor():
+					if inputdirection_x !=0:
+						player.state = player.states.WALK
+					else:
+						player.state = player.states.IDLE
+				else:
+					player.state = player.states.FALL
+		
+		
+		player.states.DASH:
+			player.is_dashing = true
+			player.apply_gravity(delta)
+			player.animation_state.travel("dash")
+			
+			player.current_velocity.y = 0
+			inputdirection_x =(
+		Input.get_action_strength("right")-Input.get_action_strength("left")
+			)
+			if !player.get_node("Sprite").flip_h :
+				player.current_velocity.x = player.dash_speed
+			else:
+				player.current_velocity.x = -player.dash_speed
+			if player.is_dashing:
+				print("is dashing")
+				print(player.is_attacking)
+				
+			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
+																Vector2.DOWN,
+																Vector2.UP,
+																true,
+																4,
+																player.floor_max_angle,
+																false)
+			
+			yield(get_tree().create_timer(0.25),"timeout")
+			player.is_dashing = false
+			if !player.is_dashing:
+				if player.is_on_floor():
+					if inputdirection_x !=0:
+						player.state = player.states.WALK
+					else:
+						player.state = player.states.IDLE
+				else:
+					player.state = player.states.FALL
+			

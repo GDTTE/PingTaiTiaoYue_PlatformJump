@@ -3,25 +3,25 @@ class_name Entity
 
 var velocity: Vector2 = Vector2.ZERO
 
-var controller:IController
 
 func _ready() -> void:
-	pass
+	for child in get_children():
+		if child is IController:
+			controller = child.new()
+			return
 
-
-func _input(event: InputEvent) -> void:
-	controller.input(event)
 
 
 func _process(delta: float) -> void:
-	controller.process(delta)
-	updata_flip()
-
+	pass
 
 func _physics_process(delta: float) -> void:
-	velocity = controller.physics_process(delta)
+	controller.physics_process(delta)
+	print(controller)
+	update_flip()
 
 
-func updata_flip(x = velocity.x) -> void:
+
+func update_flip(x = velocity.x) -> void:
 	if x > 0 : get_node("Sprite").flip_h = false
 	elif x < 0 : get_node("Sprite").flip_h = true

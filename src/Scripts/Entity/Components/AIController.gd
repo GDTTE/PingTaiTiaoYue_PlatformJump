@@ -50,4 +50,5 @@ func do():
 	expect_velocity.x = [-1,0,1][rng.randi_range(0,2)]
 	
 
-
+func physics_process(delta):
+	print("AIController Physics Process")

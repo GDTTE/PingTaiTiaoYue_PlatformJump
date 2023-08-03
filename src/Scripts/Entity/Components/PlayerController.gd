@@ -27,11 +27,15 @@ func _process(delta) -> void:
 	
 
 func _physics_process(delta) -> void:
+	inputdirection_x =(
+		Input.get_action_strength("right")-Input.get_action_strength("left")
+			)
+			
+	
 	
 	match player.state:
 		
 		player.states.IDLE:
-			print("idle")
 			player.current_velocity = Vector2.ZERO
 			player.is_jumping = false
 			player.animation_state.travel("idle")
@@ -43,9 +47,7 @@ func _physics_process(delta) -> void:
 																4,
 																player.floor_max_angle,
 																false)
-			inputdirection_x =(
-		Input.get_action_strength("right")-Input.get_action_strength("left")
-			)
+			
 		
 			
 			if  player.is_on_floor():
@@ -74,14 +76,12 @@ func _physics_process(delta) -> void:
 					
 		player.states.WALK:
 			player.animation_state.travel("walk")
-			inputdirection_x =(
-		Input.get_action_strength("right")-Input.get_action_strength("left")
-			)
+			
 			player.update_flip(inputdirection_x)
-			player.apply_gravity(delta)
+			
 			
 			#player.updata_flip()
-			
+			player.apply_gravity(delta)
 			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
 																Vector2.DOWN,
 																Vector2.UP,
@@ -105,7 +105,8 @@ func _physics_process(delta) -> void:
 					
 					player.state = player.states.DASH
 			
-			
+			if !player.is_on_floor():
+				player.state = player.states.FALL
 		
 			
 			if is_equal_approx(player.current_velocity.x, 0.0):
@@ -119,8 +120,8 @@ func _physics_process(delta) -> void:
 				player.current_velocity.y = -player.jump_speed
 			player.is_jumping = true
 			player.update_flip(inputdirection_x)
-			player.apply_gravity(delta)
 			
+			player.apply_gravity(delta)
 			#player.updata_flip()
 			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
 																Vector2.DOWN,
@@ -129,9 +130,7 @@ func _physics_process(delta) -> void:
 																4,
 																player.floor_max_angle,
 																false)
-			inputdirection_x =(
-		Input.get_action_strength("right")-Input.get_action_strength("left")
-			)
+		
 			player.current_velocity.x = inputdirection_x * player.walk_speed
 			
 			
@@ -157,7 +156,7 @@ func _physics_process(delta) -> void:
 			player.apply_gravity(delta)
 			player.update_flip(inputdirection_x)
 			#player.updata_flip()
-			
+			player.apply_gravity(delta)
 			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
 																Vector2.DOWN,
 																Vector2.UP,
@@ -165,9 +164,7 @@ func _physics_process(delta) -> void:
 																4,
 																player.floor_max_angle,
 																false)
-			inputdirection_x =(
-		Input.get_action_strength("right")-Input.get_action_strength("left")
-			)
+		
 			player.current_velocity.x = inputdirection_x * player.walk_speed
 			
 			if player.is_on_floor():
@@ -187,16 +184,13 @@ func _physics_process(delta) -> void:
 		
 		
 		player.states.ATTACK:
-			print("attack")
 			player.is_attacking = true
 			player.animation_state.travel("attack")
 			player.current_velocity.y = 0
-			player.apply_gravity(delta)
+			
 			yield(get_tree().create_timer(0.45),"timeout")
 			player.is_attacking = false
-			inputdirection_x =(
-		Input.get_action_strength("right")-Input.get_action_strength("left")
-			)
+			
 			if !player.is_attacking:
 				if player.is_on_floor():
 					if inputdirection_x !=0:
@@ -209,19 +203,16 @@ func _physics_process(delta) -> void:
 		
 		player.states.DASH:
 			player.is_dashing = true
-			player.apply_gravity(delta)
+			
 			player.animation_state.travel("dash")
 			
 			player.current_velocity.y = 0
-			inputdirection_x =(
-		Input.get_action_strength("right")-Input.get_action_strength("left")
-			)
+			
 			if !player.get_node("Sprite").flip_h :
 				player.current_velocity.x = player.dash_speed
 			else:
 				player.current_velocity.x = -player.dash_speed
 			if player.is_dashing:
-				print("is dashing")
 				print(player.is_attacking)
 				
 			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
@@ -243,3 +234,6 @@ func _physics_process(delta) -> void:
 				else:
 					player.state = player.states.FALL
 			
+			
+		player.states.DEATH:
+			print("death")

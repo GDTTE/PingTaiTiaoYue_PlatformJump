@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Objects/TileMap.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Objects/background.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Entity/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Entity/Enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/UI/PlayerHealthBar.tscn" type="PackedScene" id=5]
 
 [node name="Level_1" type="Node2D"]
 
@@ -12,9 +13,16 @@ margin_right = 320.0
 margin_bottom = 180.0
 
 [node name="TileMap" parent="." instance=ExtResource( 1 )]
+collision_mask = 7
 
-[node name="Enemy" parent="." instance=ExtResource( 4 )]
-position = Vector2( 112, 144 )
+[node name="PlayerHealthBar" parent="." instance=ExtResource( 5 )]
+margin_left = 36.0
+margin_top = 35.0
+margin_right = 65.0
+margin_bottom = 39.0
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 69, 50 )
+
+[node name="Enemy" parent="." instance=ExtResource( 4 )]
+position = Vector2( 112, 144 )

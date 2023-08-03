@@ -5,10 +5,10 @@ class_name Player
 onready var animation_state = get_node("AnimationTree").get("parameters/playback")
 
 # temporary put in there
-var gravity: = 800
+var gravity: = 700
 
 # basic parameters
-var walk_speed: float = 80
+var walk_speed: float = 75
 var jump_speed:float = 300
 var dash_speed:float = 300
 
@@ -38,6 +38,13 @@ enum states{
 }
 
 var state = states.WALK
+onready var PHBar  = get_node("../PlayerHealthBar")
+var player_max_health = 100
+	
+func _ready():
+	get_node("HitboxPosition/Hitbox/CollisionShape2D").disabled = true
+	PHBar.value = player_max_health
+	
 	
 func apply_gravity(delta:float)->void:
 	current_velocity.y += delta * gravity
@@ -46,8 +53,10 @@ func apply_gravity(delta:float)->void:
 func update_flip(inputdirection_x)->void:
 	if inputdirection_x>0:
 		get_node("Sprite").flip_h = false
+		get_node("HitboxPosition/Hitbox").rotation_degrees = 0
 	if inputdirection_x < 0:
 		get_node("Sprite").flip_h = true
+		get_node("HitboxPosition/Hitbox").rotation_degrees = 180
 
 func on_attack_finished():
 	is_attacking = false

@@ -3,7 +3,7 @@ extends KinematicBody2D
 class_name Enemy
 
 export(float) var gravity = 800
-export(int) var walk_speed = 75
+export(int) var walk_speed = 30
 
 var velocity: Vector2
 var direction: String = "right"
@@ -16,6 +16,7 @@ var snap_vector = snap_direction * snap_length
 var floor_max_angle = deg2rad(65)
 
 var rand_gen = RandomNumberGenerator.new()
+
 
 var state
 enum states{
@@ -73,19 +74,10 @@ func _physics_process(delta: float) -> void:
 				for i in range(get_slide_count()):
 					var collision = get_slide_collision(i)
 					var collider = collision.collider
-					collision_normal = collision.normal
+	#				collision_normal = collision.normal
 					if collider is Player:
-						collider.PHBar.value -= 1
-						
-						collider.current_velocity = (-collision_normal*500) as Vector2
-						collider.current_velocity = collider.move_and_slide_with_snap(collider.current_velocity,
-																Vector2.DOWN,
-																Vector2.UP,
-																true,
-																4,
-																collider.floor_max_angle,
-																false)
-						state = states.DAMAGED
+						collider.collider_direction = direction
+						collider.get_node("StateMachine").transition_to("damaged")
 						
 
 		states.DEATH:
@@ -94,15 +86,15 @@ func _physics_process(delta: float) -> void:
 			yield($AnimatedSprite, "animation_finished")
 			queue_free()
 		
-		states.DAMAGED:
-			velocity = (collision_normal*500) as Vector2
-			velocity = move_and_slide_with_snap(velocity,
-												snap_vector,
-												Vector2.UP, 
-												true, 
-												4, 
-												floor_max_angle, 
-												false)
+#		states.DAMAGED:
+#			velocity = (collision_normal*500) as Vector2
+#			velocity = move_and_slide_with_snap(velocity,
+#												snap_vector,
+#												Vector2.UP, 
+#												true, 
+#												4, 
+#												floor_max_angle, 
+#												false)
 			print(velocity)
 			state = states.WALK
 

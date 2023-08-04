@@ -1,39 +1,20 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=69 format=2]
 
 [ext_resource path="res://assets/Player/player_sprite_sheet.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Entity/Components/Player.gd" type="Script" id=2]
-[ext_resource path="res://Scripts/Entity/Components/PlayerController.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/StateMachine/idle.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/StateMachine/StateMachine.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/StateMachine/walk.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/StateMachine/jump.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/StateMachine/fall.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/StateMachine/damaged.gd" type="Script" id=9]
+[ext_resource path="res://Scripts/StateMachine/death.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/StateMachine/attack.gd" type="Script" id=11]
+[ext_resource path="res://Scripts/StateMachine/dash.gd" type="Script" id=12]
 
-[sub_resource type="CapsuleShape2D" id=49]
-radius = 4.0
-height = 6.0
-
-[sub_resource type="Animation" id=1]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("HitboxPosition/Hitbox/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ false ]
-}
+[sub_resource type="CapsuleShape2D" id=61]
+radius = 5.0
+height = 4.0
 
 [sub_resource type="Animation" id=9]
 resource_name = "attack"
@@ -74,6 +55,60 @@ tracks/2/keys = {
 "values": [ {
 "args": [  ],
 "method": "on_attack_finished"
+} ]
+}
+
+[sub_resource type="Animation" id=50]
+resource_name = "damaged"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.076888, 0.151675, 0.230616, 0.316026, 0.396162, 0.48429, 0.57416 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 34, 0, 34, 0, 34, 0, 34 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:collision_mask")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 1, 13 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:collision_layer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 2 ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "on_damaged_finished"
 } ]
 }
 
@@ -225,6 +260,9 @@ tracks/0/keys = {
 [sub_resource type="AnimationNodeAnimation" id=11]
 animation = "attack"
 
+[sub_resource type="AnimationNodeAnimation" id=52]
+animation = "damaged"
+
 [sub_resource type="AnimationNodeAnimation" id=12]
 animation = "dash"
 
@@ -306,9 +344,29 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=48]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=53]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=54]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=55]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=56]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=57]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=58]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=59]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=60]
+switch_mode = 2
+auto_advance = true
+
 [sub_resource type="AnimationNodeStateMachine" id=39]
 states/attack/node = SubResource( 11 )
 states/attack/position = Vector2( 477, 59 )
+states/damaged/node = SubResource( 52 )
+states/damaged/position = Vector2( 1214, -44.574 )
 states/dash/node = SubResource( 12 )
 states/dash/position = Vector2( 498, 675 )
 states/death/node = SubResource( 13 )
@@ -316,16 +374,16 @@ states/death/position = Vector2( 1178, 422 )
 states/fall/node = SubResource( 14 )
 states/fall/position = Vector2( 752, 497 )
 states/idle/node = SubResource( 15 )
-states/idle/position = Vector2( 58, 422 )
+states/idle/position = Vector2( 57, 422 )
 states/jump/node = SubResource( 16 )
 states/jump/position = Vector2( 422, 804 )
 states/push/node = SubResource( 17 )
 states/push/position = Vector2( 710, 349 )
 states/walk/node = SubResource( 18 )
 states/walk/position = Vector2( 432, 204 )
-transitions = [ "idle", "attack", SubResource( 19 ), "idle", "walk", SubResource( 20 ), "idle", "dash", SubResource( 21 ), "idle", "jump", SubResource( 22 ), "walk", "push", SubResource( 23 ), "walk", "fall", SubResource( 24 ), "dash", "death", SubResource( 25 ), "walk", "death", SubResource( 26 ), "idle", "death", SubResource( 27 ), "attack", "death", SubResource( 28 ), "jump", "death", SubResource( 29 ), "fall", "death", SubResource( 30 ), "push", "death", SubResource( 31 ), "walk", "dash", SubResource( 32 ), "jump", "dash", SubResource( 33 ), "jump", "fall", SubResource( 34 ), "push", "fall", SubResource( 35 ), "walk", "attack", SubResource( 36 ), "dash", "fall", SubResource( 37 ), "attack", "idle", SubResource( 38 ), "dash", "idle", SubResource( 41 ), "walk", "idle", SubResource( 43 ), "jump", "attack", SubResource( 44 ), "fall", "attack", SubResource( 45 ), "attack", "fall", SubResource( 46 ), "fall", "idle", SubResource( 47 ), "idle", "fall", SubResource( 48 ) ]
+transitions = [ "idle", "attack", SubResource( 19 ), "idle", "walk", SubResource( 20 ), "idle", "dash", SubResource( 21 ), "idle", "jump", SubResource( 22 ), "walk", "push", SubResource( 23 ), "walk", "fall", SubResource( 24 ), "dash", "death", SubResource( 25 ), "walk", "death", SubResource( 26 ), "idle", "death", SubResource( 27 ), "attack", "death", SubResource( 28 ), "jump", "death", SubResource( 29 ), "fall", "death", SubResource( 30 ), "push", "death", SubResource( 31 ), "walk", "dash", SubResource( 32 ), "jump", "dash", SubResource( 33 ), "jump", "fall", SubResource( 34 ), "push", "fall", SubResource( 35 ), "walk", "attack", SubResource( 36 ), "dash", "fall", SubResource( 37 ), "attack", "idle", SubResource( 38 ), "dash", "idle", SubResource( 41 ), "walk", "idle", SubResource( 43 ), "jump", "attack", SubResource( 44 ), "fall", "attack", SubResource( 45 ), "attack", "fall", SubResource( 46 ), "fall", "idle", SubResource( 47 ), "idle", "fall", SubResource( 48 ), "idle", "damaged", SubResource( 53 ), "attack", "damaged", SubResource( 54 ), "walk", "damaged", SubResource( 55 ), "push", "damaged", SubResource( 56 ), "fall", "damaged", SubResource( 57 ), "dash", "damaged", SubResource( 58 ), "jump", "damaged", SubResource( 59 ), "damaged", "idle", SubResource( 60 ) ]
 start_node = "idle"
-graph_offset = Vector2( -214, 124.426 )
+graph_offset = Vector2( 118, -219.574 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=40]
 
@@ -342,14 +400,15 @@ script = ExtResource( 2 )
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 vframes = 35
+frame = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1 )
-shape = SubResource( 49 )
+shape = SubResource( 61 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 1 )
 anims/attack = SubResource( 9 )
+anims/damaged = SubResource( 50 )
 anims/dash = SubResource( 6 )
 anims/death = SubResource( 2 )
 anims/fall = SubResource( 4 )
@@ -380,20 +439,31 @@ rotation = 1.5708
 shape = SubResource( 42 )
 
 [node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 5 )
+initial_state_path = NodePath("idle")
 
 [node name="idle" type="Node" parent="StateMachine"]
+script = ExtResource( 4 )
 
 [node name="walk" type="Node" parent="StateMachine"]
+script = ExtResource( 6 )
 
 [node name="jump" type="Node" parent="StateMachine"]
+script = ExtResource( 7 )
 
 [node name="fall" type="Node" parent="StateMachine"]
+script = ExtResource( 8 )
 
 [node name="attack" type="Node" parent="StateMachine"]
+script = ExtResource( 11 )
 
 [node name="dash" type="Node" parent="StateMachine"]
+script = ExtResource( 12 )
 
 [node name="death" type="Node" parent="StateMachine"]
+script = ExtResource( 10 )
+
+[node name="damaged" type="Node" parent="StateMachine"]
+script = ExtResource( 9 )
 
 [node name="PlayerController" type="Node" parent="."]
-script = ExtResource( 3 )

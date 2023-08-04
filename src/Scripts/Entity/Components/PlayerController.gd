@@ -36,10 +36,10 @@ func _physics_process(delta) -> void:
 				for i in range(player.get_slide_count()):
 					var collision = player.get_slide_collision(i)
 					var collider = collision.collider
-					
+
 					if collider is Enemy:
-						collision_normal = collision.normal
-						print(collision_normal)
+						#collision_normal = collision.normal
+						player.collider_direction = collider.direction
 						player.state = player.states.DAMAGED
 	
 	
@@ -223,8 +223,7 @@ func _physics_process(delta) -> void:
 				player.current_velocity.x = player.dash_speed
 			else:
 				player.current_velocity.x = -player.dash_speed
-			if player.is_dashing:
-				print(player.is_attacking)
+	
 				
 			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
 																Vector2.DOWN,
@@ -248,16 +247,24 @@ func _physics_process(delta) -> void:
 			
 			
 		player.states.DAMAGED:
-			player.current_velocity = (collision_normal*500) as Vector2
-			player.PHBar.value -= 1
-			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
-																Vector2.DOWN,
-																Vector2.UP,
-																true,
-																4,
-																player.floor_max_angle,
-																false)
-		
+			#player.current_velocity = (collision_normal*500) as Vector2
+#			player.animation_state.travel("damaged")
+#			if player.direction == "right":
+#				player.current_velocity = Vector2(-500,-300)
+#			else:
+#				player.current_velocity = Vector2(500,-300)
+#
+#			player.PHBar.value -= 10
+#			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
+#																Vector2.DOWN,
+#																Vector2.UP,
+#																true,
+#																4,
+#																player.floor_max_angle,
+#																false)
+			player.resolve_damaged(player.collider_direction)
+			
+			
 			if player.is_on_floor():
 				if inputdirection_x !=0:
 					player.state = player.states.WALK
@@ -270,3 +277,6 @@ func _physics_process(delta) -> void:
 		
 		player.states.DEATH:
 			print("death")
+
+
+

@@ -59,6 +59,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Entity/Components/PlayerController.gd"
 }, {
+"base": "Node",
+"class": "StateCommonCode",
+"language": "GDScript",
+"path": "res://Scripts/StateMachine/StateCommonCode.gd"
+}, {
+"base": "Node",
+"class": "StateMachine",
+"language": "GDScript",
+"path": "res://Scripts/StateMachine/StateMachine.gd"
+}, {
 "base": "IActor",
 "class": "WalkActor",
 "language": "GDScript",
@@ -80,6 +90,8 @@ _global_script_class_icons={
 "Performer": "",
 "Player": "",
 "PlayerController": "",
+"StateCommonCode": "",
+"StateMachine": "",
 "WalkActor": "",
 "Weapon": ""
 }
@@ -137,6 +149,7 @@ attack={
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Enemy"
 2d_physics/layer_4="Objects"
+2d_physics/layer_5="PlayerHurtbox"
 
 [mono]
 

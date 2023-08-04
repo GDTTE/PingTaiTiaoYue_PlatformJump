@@ -21,8 +21,9 @@ margin_top = 35.0
 margin_right = 65.0
 margin_bottom = 39.0
 
-[node name="Player" parent="." instance=ExtResource( 3 )]
-position = Vector2( 69, 50 )
-
 [node name="Enemy" parent="." instance=ExtResource( 4 )]
 position = Vector2( 112, 144 )
+collision_mask = 18
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 69, 50 )

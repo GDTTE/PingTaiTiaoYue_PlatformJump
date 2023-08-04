@@ -4,6 +4,7 @@ extends StateCommonCode
 
 func enter()->void:
 	player.animation_state.travel("idle")
+	print(player.is_attacking)
 	player.current_velocity = Vector2.ZERO
 	player.is_jumping = false
 	player.dash_nums = 1

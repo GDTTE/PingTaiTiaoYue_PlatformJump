@@ -49,9 +49,9 @@ func physics_update(delta)->void:
 		
 	if Input.is_action_just_pressed("attack"):
 		if !player.is_attacking:
-			state_machine.transition_to("idle")
+			state_machine.transition_to("attack")
 		
 	if Input.is_action_just_pressed("dash"):
 		if player.dash_nums >0:
 			player.dash_nums -= 1
-			state_machine.transition_to("idle")
+			state_machine.transition_to("dash")

@@ -9,7 +9,7 @@ func enter()->void:
 	
 	
 func exit()->void:
-	pass
+	player.is_attacking = false
 
 
 

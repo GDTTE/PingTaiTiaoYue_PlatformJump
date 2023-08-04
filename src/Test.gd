@@ -6,7 +6,8 @@ extends ProgressBar
 
 
 
-func _physics_process(delta)->void:
-	self.value -= 0.1
+func _ready():
+	var collision_normal:Vector2 = Vector2(1,1)
+	print(-collision_normal * 10)
 
 

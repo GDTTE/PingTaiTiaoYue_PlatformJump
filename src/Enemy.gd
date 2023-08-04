@@ -8,6 +8,7 @@ export(int) var walk_speed = 75
 var velocity: Vector2
 var direction: String = "right"
 var input_direction_x
+var collision_normal:Vector2
 
 var snap_length: int = 2
 var snap_direction: Vector2 = Vector2.DOWN
@@ -19,7 +20,8 @@ var rand_gen = RandomNumberGenerator.new()
 var state
 enum states{
 	WALK,
-	DEATH
+	DEATH,
+	DAMAGED
 }
 
 func _ready() -> void:
@@ -58,20 +60,32 @@ func _physics_process(delta: float) -> void:
 			$AnimatedSprite.play("Walk")
 			updata_direction(input_direction_x)
 			velocity.x = walk_speed * input_direction_x
-			#apply_gravity(delta)
-#			velocity = move_and_slide_with_snap(velocity, snap_vector, Vector2.UP, true, 4, floor_max_angle, false)
-			velocity = move_and_slide(velocity,Vector2.UP)
-			print(velocity)
+			apply_gravity(delta)
+			velocity = move_and_slide_with_snap(velocity,
+												snap_vector,
+												Vector2.UP, 
+												true, 
+												4, 
+												floor_max_angle, 
+												false)
+
 			if get_slide_count() > 0:
 				for i in range(get_slide_count()):
 					var collision = get_slide_collision(i)
 					var collider = collision.collider
+					collision_normal = collision.normal
 					if collider is Player:
 						collider.PHBar.value -= 1
-						velocity.y = -200
-						print(velocity.y)
-						collider.current_velocity.y = -200
 						
+						collider.current_velocity = (-collision_normal*500) as Vector2
+						collider.current_velocity = collider.move_and_slide_with_snap(collider.current_velocity,
+																Vector2.DOWN,
+																Vector2.UP,
+																true,
+																4,
+																collider.floor_max_angle,
+																false)
+						state = states.DAMAGED
 						
 
 		states.DEATH:
@@ -79,7 +93,18 @@ func _physics_process(delta: float) -> void:
 			$CollisionShape2D.disabled = true
 			yield($AnimatedSprite, "animation_finished")
 			queue_free()
-	
+		
+		states.DAMAGED:
+			velocity = (collision_normal*500) as Vector2
+			velocity = move_and_slide_with_snap(velocity,
+												snap_vector,
+												Vector2.UP, 
+												true, 
+												4, 
+												floor_max_angle, 
+												false)
+			print(velocity)
+			state = states.WALK
 
 func apply_gravity(delta) -> void:
 	velocity.y = gravity * delta

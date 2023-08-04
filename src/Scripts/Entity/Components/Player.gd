@@ -25,6 +25,7 @@ var dash_nums = 1
 #onready var animation_state = get_node("/root/AnimationTree").get("parameters/playback")
 
 var inputdirection_x
+var direction = "right" 
 
 enum states{
 	IDLE,
@@ -34,7 +35,8 @@ enum states{
 	JUMP,
 	FALL,
 	DASH,
-	DEATH
+	DEATH,
+	DAMAGED
 }
 
 var state = states.WALK
@@ -52,9 +54,11 @@ func apply_gravity(delta:float)->void:
 
 func update_flip(inputdirection_x)->void:
 	if inputdirection_x>0:
+		direction = "right"
 		get_node("Sprite").flip_h = false
 		get_node("HitboxPosition/Hitbox").rotation_degrees = 0
 	if inputdirection_x < 0:
+		direction = "left"
 		get_node("Sprite").flip_h = true
 		get_node("HitboxPosition/Hitbox").rotation_degrees = 180
 

@@ -7,6 +7,7 @@ class_name PlayerController
 	
 	
 var inputdirection_x :float
+var collision_normal:Vector2
 
 
 var player
@@ -31,6 +32,16 @@ func _physics_process(delta) -> void:
 		Input.get_action_strength("right")-Input.get_action_strength("left")
 			)
 			
+	if player.get_slide_count() > 0:
+				for i in range(player.get_slide_count()):
+					var collision = player.get_slide_collision(i)
+					var collider = collision.collider
+					
+					if collider is Enemy:
+						collision_normal = collision.normal
+						print(collision_normal)
+						player.state = player.states.DAMAGED
+	
 	
 	
 	match player.state:
@@ -235,5 +246,27 @@ func _physics_process(delta) -> void:
 					player.state = player.states.FALL
 			
 			
+			
+		player.states.DAMAGED:
+			player.current_velocity = (collision_normal*500) as Vector2
+			player.PHBar.value -= 1
+			player.current_velocity = player.move_and_slide_with_snap(player.current_velocity,
+																Vector2.DOWN,
+																Vector2.UP,
+																true,
+																4,
+																player.floor_max_angle,
+																false)
+		
+			if player.is_on_floor():
+				if inputdirection_x !=0:
+					player.state = player.states.WALK
+				else:
+					player.state = player.states.IDLE
+			else:
+				player.state = player.states.FALL
+		
+		
+		
 		player.states.DEATH:
 			print("death")

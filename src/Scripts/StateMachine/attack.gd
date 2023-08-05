@@ -10,6 +10,7 @@ func enter()->void:
 	
 func exit()->void:
 	player.is_attacking = false
+	player.get_node("HitboxPosition/Hitbox/CollisionShape2D").disabled = true
 
 
 

@@ -3,12 +3,15 @@ extends StateCommonCode
 
 
 func enter()->void:
+	
+	print("damaged process enter")
 	player.animation_state.travel("damaged")
 	player.being_damaged = true
-	print("enter damaged process")
+	
 	player.resolve_damaged(player.collider_direction)
 	player.current_velocity += player.damaged_velocity
-	
+	print("damaged_velocity" , player.damaged_velocity)
+	print("current_velocity", player.current_velocity)
 	
 func exit()->void:
 	pass
@@ -17,7 +20,7 @@ func exit()->void:
 
 func physics_update(delta)->void:
 	
-	print("in damaged process")
+
 	var inputdirection_x =(
 		Input.get_action_strength("right")-Input.get_action_strength("left")
 			)

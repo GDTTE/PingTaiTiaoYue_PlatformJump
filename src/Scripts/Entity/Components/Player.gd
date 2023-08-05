@@ -82,11 +82,11 @@ func resolve_damaged(collider_direction:String):
 	
 	if direction == "right":
 		if direction == collider_direction:
-			damaged_velocity = Vector2(100,-200)
+			damaged_velocity = Vector2(500,-200)
 		else:
-			damaged_velocity = Vector2(-100,-200)
+			damaged_velocity = Vector2(-500,-200)
 	else:
 		if direction == collider_direction:
-			damaged_velocity = Vector2(-100,-200)
+			damaged_velocity = Vector2(-500,-200)
 		else:
-			damaged_velocity = Vector2(100,-200)
+			damaged_velocity = Vector2(500,-200)

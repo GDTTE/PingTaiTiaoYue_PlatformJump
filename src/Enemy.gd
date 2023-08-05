@@ -76,8 +76,9 @@ func _physics_process(delta: float) -> void:
 					var collider = collision.collider
 	#				collision_normal = collision.normal
 					if collider is Player:
-						collider.collider_direction = direction
-						collider.get_node("StateMachine").transition_to("damaged")
+						if ! collider.being_damaged:
+							collider.collider_direction = direction
+							collider.get_node("StateMachine").transition_to("damaged")
 						
 
 		states.DEATH:

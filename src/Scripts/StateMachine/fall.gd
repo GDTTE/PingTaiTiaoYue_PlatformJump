@@ -3,7 +3,7 @@ extends StateCommonCode
 
 
 func enter()->void:
-	print("enter fall process")
+	
 	player.animation_state.travel("fall")
 	
 	

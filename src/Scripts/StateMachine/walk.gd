@@ -3,8 +3,7 @@ extends StateCommonCode
 
 
 func enter()->void:
-	print("enter walk process")
-	print(player.is_attacking)
+
 	player.animation_state.travel("walk")
 	
 	

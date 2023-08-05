@@ -3,7 +3,7 @@ extends StateCommonCode
 
 
 func enter()->void:
-	print("inter jump process")
+
 	player.animation_state.travel("jump")
 	player.current_velocity.y = -player.jump_speed
 	player.is_jumping = true
